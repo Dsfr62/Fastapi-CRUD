@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from config import get_db
 from books.service import BookService
 from books.schemas import CreateBookSchema, UpdateBookSchema
+from helpers.exportdb import export_table
 
 booksRouter = APIRouter(prefix="/books", tags=["Books"])
 
@@ -18,6 +19,10 @@ async def get_one(id:int, db:Session=Depends(get_db)):
 @booksRouter.get("/filter/{stars}", status_code=status.HTTP_200_OK)
 async def get_by_stars(stars:int, db:Session=Depends(get_db)):
     return BookService.get_by_stars(data=stars, db=db)
+
+@booksRouter.get("/service/export", status_code=status.HTTP_200_OK)
+async def export_books():
+    return export_table(tablename="books")
 
 @booksRouter.post("/", status_code=status.HTTP_201_CREATED)
 async def create_book(book:CreateBookSchema, db:Session=Depends(get_db)):
