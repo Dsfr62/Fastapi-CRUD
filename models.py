@@ -11,3 +11,13 @@ class Book(Base):
     my_opinion = Column(Text, nullable=True)
     is_read = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.now())
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, autoincrement=True, unique=True)
+    name = Column(String(256), nullable=True)
+    email = Column(String(256), nullable=False)
+    password = Column(String(512), nullable=False)
+    created_at = Column(DateTime, default=datetime.now())
